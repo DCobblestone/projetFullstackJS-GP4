@@ -60,7 +60,7 @@ class ArticleForm extends Component {
         return (
 
 
-            < form onSubmit={this.handleSubmit} className="card">
+            < form onSubmit={this.handleSubmit} className="cardForm">
                 <div className="form-group">
                     <div>
                         <label htmlFor="titre">Titre de l'article</label>

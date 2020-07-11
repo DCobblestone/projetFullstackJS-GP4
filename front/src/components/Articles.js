@@ -46,6 +46,7 @@ class Articles extends Component {
             return (
                 <div className="card-articles">
                     <div className="articles-container">
+
                         {this.state.data.data.map((item, index) =>
                             <div className="card" key={item}>
                                 <div className="card-body">
@@ -55,8 +56,13 @@ class Articles extends Component {
                                     </div>
                                     <div className="part2">
                                         <p className="card-text"><i>{item.auteur} - {item.datePublication}</i></p>
-                                        <a href="#" className="btn btn-primary">Lire la suite</a>
+                                        <a href={'/article/' + item._id} className="btn btn-primary">Lire la suite</a>
                                     </div>
+                                </div>
+                                <div className="tags">
+                                    {item.tag.map((tag, key) =>
+                                        <div>{tag}</div>
+                                    )}
                                 </div>
                             </div>
                         )}

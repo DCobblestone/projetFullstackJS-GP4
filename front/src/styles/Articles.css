@@ -1,11 +1,15 @@
 .card{
+    height: 310px;
     width: 18rem;
     margin: 10px;
+    color: black;
+    padding-bottom: 5px;
 }
 
 .card-articles{
     display: flex;
     justify-content: center;
+    width: calc(100% - 200px);
 }
 
 .articles-container{
@@ -13,6 +17,20 @@
     display: flex;
     width: 924px;
     margin-top: 30px;
+}
+
+.tags{
+    font-size: 11px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.tags>div{
+    margin-right: -1px;
+    border: 1px solid black;
+    padding-right: 2px;
+    padding-left: 2px;
+    margin-bottom: -1px;
 }
 
 .card-body{

@@ -1,0 +1,8 @@
+.article-container{
+    color: white;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    display: flex;
+    width: 924px;
+}

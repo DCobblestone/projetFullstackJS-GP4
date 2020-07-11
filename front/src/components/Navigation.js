@@ -5,7 +5,7 @@ import '../styles/Navigation.css';
 
 const Navigation = () => {
     return (
-        <div className="drawernav col-md-2">
+        <div className="drawernav">
             <div><NavLink to="/">Accueil</NavLink></div>
             <div><NavLink to="/articles-form">Ajouter un article</NavLink></div>
         </div>

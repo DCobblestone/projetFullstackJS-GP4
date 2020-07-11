@@ -29,7 +29,17 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
                     })
                 })
             })
-
+        app.route('/article/:id')
+            .get(function (req, res, next) {
+                collection.findOne({ _id: new ObjectId(req.params.id) }, function (err, result
+                ) {
+                    if (err) throw err;
+                    res.json({
+                        status:200,
+                        data: result
+                    })
+                })
+            })
         app.route('/article')
             .post(function (req, res, next) {
                 try {
