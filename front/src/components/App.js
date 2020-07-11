@@ -1,24 +1,29 @@
-import React from 'react';
-import logo from '../logo.svg';
+import React, { Component } from 'react';
 import '../styles/App.css';
+
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
 
 import Header from './Header';
 import ArticleForm from './ArticleForm';
+import Navigation from './Navigation';
 
-function App() {
-  return (
+class App extends Component {
+  render() {
+    return (
+      <BrowserRouter>
+        <div>
+          <Header />
+          <Navigation />
+          <Switch>
 
-    <div className="App">
-      <header className="App-header">
-        <Header />
-        <ArticleForm />
+            <Route path="/articles-form" component={ArticleForm} exact />
+          </Switch>
+        </div>
+      </BrowserRouter>
+    )
+  }
 
-
-
-      </header>
-    </div>
-
-  );
 }
 
 export default App;
