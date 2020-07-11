@@ -1,8 +1,11 @@
 const http = require('http')
 const express = require('express')
 const hostname = 'localhost'
+const cors = require('cors')
 const port = 8000
 const app = express()
+
+app.use(cors())
 app.use(express.static(__dirname + '/public'))
 app.use(express.json())
 
