@@ -5,14 +5,11 @@ class ArticleForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: {
-                titre: '',
-                contenu: '',
-                tag: '',
-                datePublication: '',
-                auteur: ''
-            }
-
+            titre: '',
+            contenu: '',
+            tag: '',
+            datePublication: new Date().toLocaleString(),
+            auteur: ''
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -52,7 +49,9 @@ class ArticleForm extends Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
+
+
+            < form onSubmit={this.handleSubmit} >
                 <div>
                     <label htmlFor="titre">Titre de l'article</label>
                     <input
@@ -104,7 +103,7 @@ class ArticleForm extends Component {
 
                 <button>Enregistrer</button>
 
-            </form>
+            </form >
         )
     }
 }
