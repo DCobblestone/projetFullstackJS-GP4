@@ -14,6 +14,19 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
         var ObjectId = require('mongodb').ObjectId; //récupération de l'objectid
         var collection = db.collection('article');
 
+
+        //liste des points d'entrée
+        app.route('/articles')
+            .get(function (req, res, next) {
+                collection.find({}).toArray(function (err, result) {
+                    if (err) throw err;
+                    res.json({
+                        status:200,
+                        data: result
+                    })
+                })
+            })
+
         app.route('/article')
             .post(function (req, res, next) {
                 try {
@@ -27,7 +40,7 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
                     );
                     res.json({
                         status:200,
-                        data: res
+                        data: next
                     })
                 } catch (e) {
                     console.log(e);
