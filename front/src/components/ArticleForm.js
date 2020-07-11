@@ -5,11 +5,14 @@ class ArticleForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            titre: '',
-            contenu: '',
-            tag: '',
-            datePublication: '',
-            auteur: ''
+            data: {
+                titre: '',
+                contenu: '',
+                tag: '',
+                datePublication: '',
+                auteur: ''
+            }
+
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -28,11 +31,20 @@ class ArticleForm extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        const data = new FormData(event.target);
+        const data = {
+            titre: this.state.titre,
+            contenu: this.state.contenu,
+            tag: this.state.tag,
+            datePublication: this.state.datePublication,
+            auteur: this.state.auteur
+        };
 
         fetch('http://localhost:8000/article', {
             method: 'POST',
-            body: data,
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
         })
     }
 
