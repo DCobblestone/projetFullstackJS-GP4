@@ -17,7 +17,7 @@ class App extends Component {
           <Header />
           <Navigation />
           <Switch>
-
+            <Route path="/" component={Articles} exact/>
             <Route path="/articles-form" component={ArticleForm} exact />
           </Switch>
         </div>
