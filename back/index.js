@@ -3,6 +3,9 @@ const express = require('express')
 const hostname = 'localhost'
 const port = 8000
 const app = express()
+const cors = require('cors')
+
+app.use(cors())
 app.use(express.static(__dirname + '/public'))
 app.use(express.json())
 
@@ -21,7 +24,7 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
                 collection.find({}).toArray(function (err, result) {
                     if (err) throw err;
                     res.json({
-                        status:200,
+                        status: 200,
                         data: result
                     })
                 })
@@ -30,16 +33,16 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
         app.route('/article')
             .post(function (req, res, next) {
                 try {
-                    collection.insertOne( {
-                            titre : req.body.titre,
-                            contenu : req.body.contenu,
-                            tag : req.body.tag,
-                            datePublication : req.body.datePublication,
-                            auteur : req.body.auteur
-                        }
+                    collection.insertOne({
+                        titre: req.body.titre,
+                        contenu: req.body.contenu,
+                        tag: req.body.tag,
+                        datePublication: req.body.datePublication,
+                        auteur: req.body.auteur
+                    }
                     );
                     res.json({
-                        status:200,
+                        status: 200,
                         data: next
                     })
                 } catch (e) {
@@ -47,8 +50,8 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
                 };
             })
 
-        app.use(function(req, res){
-            res.writeHead(200, {'Content-Type':'application/json'})
+        app.use(function (req, res) {
+            res.writeHead(200, { 'Content-Type': 'application/json' })
             res.end('index.html')
         })
 

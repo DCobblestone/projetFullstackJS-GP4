@@ -3,6 +3,7 @@ import logo from '../logo.svg';
 import '../styles/App.css';
 
 import Header from './Header';
+import ArticleForm from './ArticleForm';
 
 function App() {
   return (
@@ -10,7 +11,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <Header />
-
+        <ArticleForm />
 
 
 
