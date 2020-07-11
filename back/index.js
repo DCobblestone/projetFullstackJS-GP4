@@ -14,6 +14,26 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
         var ObjectId = require('mongodb').ObjectId; //récupération de l'objectid
         var collection = db.collection('article');
 
+        app.route('/article')
+            .post(function (req, res, next) {
+                try {
+                    collection.insertOne( {
+                            titre : req.body.titre,
+                            contenu : req.body.contenu,
+                            tag : req.body.tag,
+                            datePublication : req.body.datePublication,
+                            auteur : req.body.auteur
+                        }
+                    );
+                    res.json({
+                        status:200,
+                        data: res
+                    })
+                } catch (e) {
+                    console.log(e);
+                };
+            })
+
         app.use(function(req, res){
             res.writeHead(200, {'Content-Type':'application/json'})
             res.end('index.html')
