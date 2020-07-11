@@ -1,0 +1,25 @@
+{
+  "name": "projetfullstackjs-gp4",
+  "version": "1.0.0",
+  "description": "Projet FullStack JS - Group 4 : PROUDHOM Bastien - LEVECQ Pauline",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DCobblestone/projetFullstackJS-GP4.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DCobblestone/projetFullstackJS-GP4/issues"
+  },
+  "homepage": "https://github.com/DCobblestone/projetFullstackJS-GP4#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "http": "0.0.1-security",
+    "mongodb": "^3.5.9",
+    "nodemon": "^2.0.4"
+  }
+}
