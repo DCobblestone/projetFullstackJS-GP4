@@ -1,0 +1,16 @@
+.drawernav {
+    padding: 20px 30px;
+    background-color: #2a2d37;
+    -webkit-box-shadow: 5px 8px 9px 0px #212121; 
+    box-shadow: 5px 8px 9px 0px #212121;
+}
+
+.drawernav a {
+    color: white;
+}
+
+.drawernav a:hover {
+    text-decoration: none;
+    color: #007bff;
+
+}

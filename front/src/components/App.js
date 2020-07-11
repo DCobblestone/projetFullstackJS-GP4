@@ -15,11 +15,16 @@ class App extends Component {
       <BrowserRouter>
         <div>
           <Header />
-          <Navigation />
-          <Switch>
-            <Route path="/" component={Articles} exact/>
-            <Route path="/articles-form" component={ArticleForm} exact />
-          </Switch>
+          <div className="row accueil">
+            <Navigation />
+            <Switch>
+              <Route path="/" component={Articles} exact />
+              <Route path="/articles-form" component={ArticleForm} exact />
+            </Switch>
+
+          </div>
+
+
         </div>
       </BrowserRouter>
     )

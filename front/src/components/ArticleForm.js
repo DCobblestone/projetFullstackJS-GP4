@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import '../styles/Articles-form.css';
 
 class ArticleForm extends Component {
     constructor(props) {
@@ -42,7 +43,15 @@ class ArticleForm extends Component {
             headers: {
                 'Content-Type': 'application/json'
             }
-        })
+        }).then(this.handleRedirect)
+    }
+
+    handleRedirect(res) {
+        if (res.status === 200) {
+            window.location.href = 'http://localhost:3000/'
+        } else {
+            console.log("error");
+        }
     }
 
 
@@ -51,57 +60,79 @@ class ArticleForm extends Component {
         return (
 
 
-            < form onSubmit={this.handleSubmit} >
-                <div>
-                    <label htmlFor="titre">Titre de l'article</label>
+            < form onSubmit={this.handleSubmit} className="card">
+                <div className="form-group">
+                    <div>
+                        <label htmlFor="titre">Titre de l'article</label>
+                    </div>
                     <input
+                        className="form-control form-control-lg"
                         id="titre"
                         name="titre"
                         type="text"
+                        placeholder="Titre de l'article"
                         value={this.state.titre}
                         onChange={this.handleChange} />
                 </div>
 
-                <div>
-                    <label htmlFor="contenu">Contenu</label>
+                <div className="form-group">
+                    <div>
+                        <label htmlFor="contenu">Contenu</label>
+                    </div>
                     <textarea
+                        className="form-control"
+                        rows="6"
                         id="contenu"
                         name="contenu"
+                        placeholder="Lorem ipsum dolor sit amet ..."
                         value={this.state.contenu}
                         onChange={this.handleChange} />
                 </div>
 
-                <div>
-                    <label htmlFor="tag">Tag(s)</label>
+                <div className="form-group">
+                    <div>
+                        <label htmlFor="tag">Tag(s)</label>
+                    </div>
                     <input
+                        className="form-control"
                         id="tag"
                         name="tag"
                         type="text"
+                        placeholder="Thèmes, Chatbot, Widgets, Blogs"
                         value={this.state.tag}
                         onChange={this.handleChange} />
+                    <small id="tagHelp" className="form-text text-muted">Vous pouvez définir plusieurs tags en les séparant par des virgules.</small>
                 </div>
 
-                <div>
-                    <label htmlFor="datePublication">Date de publication</label>
+                <div className="form-group">
+                    <div>
+                        <label htmlFor="datePublication">Date de publication</label>
+                    </div>
                     <input
+                        className="form-control"
                         id="datePublication"
                         name="datePublication"
                         type="text"
                         value={this.state.datePublication}
-                        onChange={this.handleChange} />
+                        onChange={this.handleChange}
+                        readOnly />
                 </div>
 
-                <div>
-                    <label htmlFor="auteur">Auteur</label>
+                <div className="form-group">
+                    <div>
+                        <label htmlFor="auteur">Auteur</label>
+                    </div>
                     <input
+                        className="form-control"
                         id="auteur"
                         name="auteur"
                         type="text"
+                        placeholder="Batman"
                         value={this.state.auteur}
                         onChange={this.handleChange} />
                 </div>
 
-                <button>Enregistrer</button>
+                <div className="submit"><button className="btn btn-primary">Enregistrer</button></div>
 
             </form >
         )

@@ -1,14 +1,13 @@
 import React from 'react';
 
 import { NavLink } from 'react-router-dom';
+import '../styles/Navigation.css';
 
 const Navigation = () => {
     return (
-        <div>
-            <NavLink to="/">Home</NavLink>
-            <NavLink to="/about">About</NavLink>
-            <NavLink to="/contact">Contact</NavLink>
-            <NavLink to="/articles-form">Ajouter un article</NavLink>
+        <div className="drawernav col-md-2">
+            <div><NavLink to="/">Accueil</NavLink></div>
+            <div><NavLink to="/articles-form">Ajouter un article</NavLink></div>
         </div>
     );
 }
