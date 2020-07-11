@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
+import '../styles/Header.css';
+
 
 class Header extends Component {
     render() {
-        return ("Projet Fullstack JS : Wiki");
+        return (
+            <div className="header">
+                <h1>Projet Fullstack JS : Wiki</h1>
+            </div>
+        );
     }
 }
 

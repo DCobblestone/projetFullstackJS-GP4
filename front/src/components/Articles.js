@@ -45,16 +45,22 @@ class Articles extends Component {
             // Pas d'erreur et les données sont bien chargées, on affiche le résultat de notre requête.
             return (
                 <div className="card-articles">
-                    {this.state.data.data.map((item, index) =>
-                    <div className="card">
-                            <div className="card-body">
-                                <h5 className="card-title">{item.titre}</h5>
-                                <p className="card-text">{item.contenu}</p>
-                                <p className="card-text"><i>{item.auteur} - {item.datePublication}</i></p>
-                                <a href="#" className="btn btn-primary">Lire la suite</a>
+                    <div className="articles-container">
+                        {this.state.data.data.map((item, index) =>
+                            <div className="card" key={item}>
+                                <div className="card-body">
+                                    <div className="part1">
+                                        <h5 className="card-title">{item.titre}</h5>
+                                        <p className="card-text truncate">{item.contenu}</p>
+                                    </div>
+                                    <div className="part2">
+                                        <p className="card-text"><i>{item.auteur} - {item.datePublication}</i></p>
+                                        <a href="#" className="btn btn-primary">Lire la suite</a>
+                                    </div>
+                                </div>
                             </div>
+                        )}
                     </div>
-                )}
                 </div>
             );
         }
