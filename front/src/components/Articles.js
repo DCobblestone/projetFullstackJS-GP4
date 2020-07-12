@@ -17,7 +17,8 @@ class Articles extends Component {
             method: 'GET',
             headers: {
                 "Content-Type": "application/json"
-            }})
+            }
+        })
             .then(res => res.json())
             .then(
                 (result) => {
@@ -52,7 +53,7 @@ class Articles extends Component {
                                 <div className="card-body">
                                     <div className="part1">
                                         <h5 className="card-title">{item.titre}</h5>
-                                        <p className="card-text truncate">{item.contenu}</p>
+                                        <div className="card-text truncate" dangerouslySetInnerHTML={{ __html: item.contenu }} />
                                     </div>
                                     <div className="part2">
                                         <p className="card-text"><i>{item.auteur} - {item.datePublication}</i></p>
@@ -60,9 +61,10 @@ class Articles extends Component {
                                     </div>
                                 </div>
                                 <div className="tags">
-                                    {item.tag.map((tag, key) =>
+                                    {/* {item.tag.map((tag, key) =>
                                         <div>{tag}</div>
-                                    )}
+                                    )} */}
+                                    {item.tag}
                                 </div>
                             </div>
                         )}
