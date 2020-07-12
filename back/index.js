@@ -19,7 +19,7 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
 
         app.route('/setup').get(function(req, res, next){
             var article = {
-                _id: "5f0b043eafec7822948984b6",
+                _id: new ObjectId("5f0b043eafec7822948984b6"),
                 titre: "Premier article !",
                 contenu: "Lorem ipsum dolor sit amet, consectetuliquam risus lectus, sed efficitur nisl ullamcorper nec. Lorem ipsum dolor sit amet, consectetuliquam risus lectus, sed efficitur nisl ullamcorper nec.",
                 tag: ["Sciences"],
@@ -108,7 +108,6 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
                 })
 
             })
-        app.route('/article')
             .put(function (req, res, next) {
                 try {
                     collection.updateOne(

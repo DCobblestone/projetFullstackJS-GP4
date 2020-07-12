@@ -61,7 +61,7 @@ class ArticleForm extends Component {
             contenu: content
         })
     }
-
+//On insère l'article et on met son id dans la catégorie adéquate
     handleSubmit(event) {
         event.preventDefault();
         const tags = this.state.tag.split(',');
@@ -83,10 +83,7 @@ class ArticleForm extends Component {
         .then(
             (result) => {
                 this.state.categories.map((categorie, key) => {
-                    console.log("categorie courante: "+categorie._id)
-                    console.log("catégorie du select: "+ this.state.categorieSelectionnee)
-                    console.log("--------------------------------")
-                    if(categorie._id == this.state.categorieSelectionnee){
+                    if(categorie._id === this.state.categorieSelectionnee){
                         var idArticles = categorie.idArticles;
                         idArticles.push(result.insertedId)
                         const data = {
@@ -94,7 +91,6 @@ class ArticleForm extends Component {
                             nom: categorie.nom,
                             idArticles: idArticles
                         }
-                        console.log(JSON.stringify(data))
                         fetch('http://localhost:8000/categorie', {
                             method: 'PUT',
                             body: JSON.stringify(data),
@@ -115,8 +111,6 @@ class ArticleForm extends Component {
             console.log("error");
         }
     }
-
-
 
     render() {
         if (this.state.categories != null){
