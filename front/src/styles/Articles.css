@@ -1,5 +1,4 @@
 .card{
-    height: 310px;
     width: 18rem;
     margin: 10px;
     color: black;
@@ -10,6 +9,8 @@
     display: flex;
     justify-content: center;
     width: calc(100% - 300px);
+    height: max-content;
+
 }
 
 .articles-container{
