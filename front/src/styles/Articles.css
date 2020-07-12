@@ -27,10 +27,14 @@
 }
 .tags>div{
     margin-right: -1px;
-    border: 1px solid black;
-    padding-right: 2px;
-    padding-left: 2px;
+    border-radius: 30px;
+    padding: 5px 10px;
+    background: #bec0c5;
     margin-bottom: -1px;
+}
+
+.tags>div + div {
+    margin-left : 5px
 }
 
 .card-body{
