@@ -61,10 +61,10 @@ class Articles extends Component {
                                     </div>
                                 </div>
                                 <div className="tags">
-                                    {/* {item.tag.map((tag, key) =>
+                                    {item.tag.map((tag, key) =>
                                         <div>{tag}</div>
-                                    )} */}
-                                    {item.tag}
+                                    )}
+                                    {/* {item.tag} */}
                                 </div>
                             </div>
                         )}

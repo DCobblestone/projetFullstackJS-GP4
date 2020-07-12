@@ -8,7 +8,7 @@ class ArticleDetail extends Component {
         this.state = {
             error: null,
             isLoaded: false,
-            data: null
+            data: null,
         };
         this.delete = this.delete.bind(this);
     }
@@ -79,8 +79,7 @@ class ArticleDetail extends Component {
                     <div className="actions">
                         <h3>Actions</h3>
                         <br />
-                        <a className="btn btn-danger" onClick={() => this.delete(this.state.data.data._id)}>Supprimer</a>
-
+                        <a className="btn btn-danger" onClick={() => { if (window.confirm('Voulez-vous vraiment supprimer ce chef d\'oeuvre ?')) this.delete(this.state.data.data._id) }}>Supprimer</a>
 
                     </div>
                 </div>
