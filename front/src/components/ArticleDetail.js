@@ -12,6 +12,7 @@ class ArticleDetail extends Component {
             error: null,
             isLoaded: false,
             showModifier: false,
+            _id: '',
             titre: '',
             contenu: '',
             tag: [],
@@ -273,7 +274,9 @@ class ArticleDetail extends Component {
                             </select>
                         </div>
 
-                        <div className="submit d-flex justify-content-end"><button className="btn btn-success">Enregistrer</button></div>
+                        <div className="submit d-flex justify-content-end">
+                            <a href={'/article/' + this.props.match.params.id} className="btn btn-danger">Annuler</a>
+                            <button className="btn btn-success">Enregistrer</button></div>
 
                     </form >
                 )

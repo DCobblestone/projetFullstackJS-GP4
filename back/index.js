@@ -27,6 +27,7 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
                 datePublication: "11/07/2020",
                 auteur: "Bastien Proudhom"
             }
+
             var categorie1 = {
                 nom: "Sport",
                 idArticles: []
@@ -135,7 +136,7 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
 
         app.route('/article/search/titre')
             .post(function (req, res, next) {
-                var regex = RegExp("." + req.body.titre + ".", 'i');
+                var regex = RegExp("." + req.body.titre + ".");
                 collection.find({ titre: regex }).toArray(function (err, result) {
                     if (err) throw err;
                     res.json({
