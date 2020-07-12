@@ -7,6 +7,8 @@ class ArticleDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            categories: null,
+            categorieSelectionnee: '',
             error: null,
             isLoaded: false,
             showModifier: false,
@@ -47,14 +49,19 @@ class ArticleDetail extends Component {
             datePublication: this.state.datePublication,
             auteur: this.state.auteur
         };
-        console.log(JSON.stringify(data));
         fetch('http://localhost:8000/article', {
             method: 'PUT',
             body: JSON.stringify(data),
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then(this.handleRedirect)
+        }).then(res => res.json())
+            .then(
+                (result) => {
+                    updateArticlesCategories(this);
+                }
+            )
+            .then(this.handleRedirect)
     }
 
     componentDidMount() {
@@ -83,6 +90,33 @@ class ArticleDetail extends Component {
                     });
                 }
             )
+        fetch('http://localhost:8000/categories/', {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        categories: result.data
+                    });
+                    this.state.categories.map((categorie, key) =>{
+                        if (categorie.idArticles.includes(this.props.match.params.id)){
+                            this.setState({
+                                categorieSelectionnee: categorie._id
+                            });
+                        }
+                    })
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
     }
 
     delete() {
@@ -91,15 +125,14 @@ class ArticleDetail extends Component {
             headers: {
                 "Content-Type": "application/json"
             }
-        }).then(this.handleRedirect)
+        }).then((res) => {
+            suppressionArticlesCategories(this);
+        })
+            .then(this.handleRedirect)
     }
 
-    handleRedirect(res) {
-        if (res.status === 200) {
-            window.location.href = 'http://localhost:3000/'
-        } else {
-            console.log("error");
-        }
+    handleRedirect() {
+        window.location.href = 'http://localhost:3000/'
     }
 
 
@@ -135,95 +168,186 @@ class ArticleDetail extends Component {
             );
         }
         else {
-            return (
-                < form onSubmit={this.handleSubmit} className="cardForm">
-                    <div className="form-group">
-                        <div>
-                            <label htmlFor="titre">Titre de l'article</label>
+            if (this.state.categories != null){
+                return (
+                    < form onSubmit={this.handleSubmit} className="cardForm">
+                        <div className="form-group">
+                            <div>
+                                <label htmlFor="titre">Titre de l'article</label>
+                            </div>
+                            <input
+                                className="form-control form-control-lg"
+                                id="titre"
+                                name="titre"
+                                type="text"
+                                placeholder="Titre de l'article"
+                                value={this.state.titre}
+                                onChange={this.handleChange} />
                         </div>
-                        <input
-                            className="form-control form-control-lg"
-                            id="titre"
-                            name="titre"
-                            type="text"
-                            placeholder="Titre de l'article"
-                            value={this.state.titre}
-                            onChange={this.handleChange} />
-                    </div>
 
-                    <div className="form-group">
-                        <div>
-                            <label htmlFor="contenu">Contenu</label>
+                        <div className="form-group">
+                            <div>
+                                <label htmlFor="contenu">Contenu</label>
+                            </div>
+                            <Editor
+                                value={this.state.contenu}
+                                init={{
+                                    height: 500,
+                                    menubar: false,
+                                    plugins: [
+                                        'advlist autolink lists link image charmap print preview anchor',
+                                        'searchreplace visualblocks code fullscreen',
+                                        'insertdatetime media table paste code help wordcount'
+                                    ],
+                                    toolbar:
+                                        'undo redo | formatselect | code bold italic backcolor | \
+                                    alignleft aligncenter alignright alignjustify | \
+                                    bullist numlist outdent indent | removeformat | help'
+                                }}
+                                onEditorChange={this.handleEditorChange}
+                            />
+
                         </div>
-                        <Editor
-                            value={this.state.contenu}
-                            init={{
-                                height: 500,
-                                menubar: false,
-                                plugins: [
-                                    'advlist autolink lists link image charmap print preview anchor',
-                                    'searchreplace visualblocks code fullscreen',
-                                    'insertdatetime media table paste code help wordcount'
-                                ],
-                                toolbar:
-                                    'undo redo | formatselect | code bold italic backcolor | \
-                                alignleft aligncenter alignright alignjustify | \
-                                bullist numlist outdent indent | removeformat | help'
-                            }}
-                            onEditorChange={this.handleEditorChange}
-                        />
 
-                    </div>
-
-                    <div className="form-group">
-                        <div>
-                            <label htmlFor="tag">Tag(s)</label>
+                        <div className="form-group">
+                            <div>
+                                <label htmlFor="tag">Tag(s)</label>
+                            </div>
+                            <input
+                                className="form-control"
+                                id="tag"
+                                name="tag"
+                                type="text"
+                                placeholder="Thèmes, Chatbot, Widgets, Blogs"
+                                value={this.state.tag}
+                                onChange={this.handleChange} />
+                            <small id="tagHelp" className="form-text text-muted">Vous pouvez définir plusieurs tags en les séparant par des virgules.</small>
                         </div>
-                        <input
-                            className="form-control"
-                            id="tag"
-                            name="tag"
-                            type="text"
-                            placeholder="Thèmes, Chatbot, Widgets, Blogs"
-                            value={this.state.tag}
-                            onChange={this.handleChange} />
-                        <small id="tagHelp" className="form-text text-muted">Vous pouvez définir plusieurs tags en les séparant par des virgules.</small>
-                    </div>
 
-                    <div className="form-group">
-                        <div>
-                            <label htmlFor="datePublication">Date de publication</label>
+                        <div className="form-group">
+                            <div>
+                                <label htmlFor="datePublication">Date de publication</label>
+                            </div>
+                            <input
+                                className="form-control"
+                                id="datePublication"
+                                name="datePublication"
+                                type="text"
+                                value={this.state.datePublication}
+                                onChange={this.handleChange}
+                                readOnly />
                         </div>
-                        <input
-                            className="form-control"
-                            id="datePublication"
-                            name="datePublication"
-                            type="text"
-                            value={this.state.datePublication}
-                            onChange={this.handleChange}
-                            readOnly />
-                    </div>
 
-                    <div className="form-group">
-                        <div>
-                            <label htmlFor="auteur">Auteur</label>
+                        <div className="form-group">
+                            <div>
+                                <label htmlFor="auteur">Auteur</label>
+                            </div>
+                            <input
+                                className="form-control"
+                                id="auteur"
+                                name="auteur"
+                                type="text"
+                                placeholder="Batman"
+                                value={this.state.auteur}
+                                onChange={this.handleChange} />
                         </div>
-                        <input
-                            className="form-control"
-                            id="auteur"
-                            name="auteur"
-                            type="text"
-                            placeholder="Batman"
-                            value={this.state.auteur}
-                            onChange={this.handleChange} />
-                    </div>
 
-                    <div className="submit d-flex justify-content-end"><button className="btn btn-success">Enregistrer</button></div>
+                        <div className="form-group">
+                            <div>
+                                <label htmlFor="categorie">Catégorie</label>
+                            </div>
+                            <select className="form-control"
+                                    id="categorieSelectionnee"
+                                    name="categorieSelectionnee"
+                                    onChange={this.handleChange}>
+                                {this.state.categories.map((categorie, key) =>{
+                                    if (categorie.idArticles.includes(this.props.match.params.id)){
+                                        return <option value={categorie._id} selected>{categorie.nom}</option>
+                                    }
+                                    else{
+                                        return <option value={categorie._id}>{categorie.nom}</option>
+                                    }
+                                }
 
-                </form >
-            )
+                                )}
+                            </select>
+                        </div>
+
+                        <div className="submit d-flex justify-content-end"><button className="btn btn-success">Enregistrer</button></div>
+
+                    </form >
+                )
+            }
+            else {
+                return (
+                    <h1>Aucune catégories en base, veillez en ajouter</h1>
+                )
+            }
         }
     }
+}
+
+function updateArticlesCategories(el) {
+    el.state.categories.map((categorie, key) => {
+            var idArticles = categorie.idArticles;
+            if(categorie._id === el.state.categorieSelectionnee && !categorie.idArticles.includes(el.props.match.params.id)){
+                idArticles.push(el.props.match.params.id)
+                const data = {
+                    _id: el.state.categorieSelectionnee,
+                    nom: categorie.nom,
+                    idArticles: idArticles
+                }
+                fetch('http://localhost:8000/categorie', {
+                    method: 'PUT',
+                    body: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+            }
+            categorie.idArticles.map((article, keyArticle) => {
+                if ((article === el.props.match.params.id) && (categorie._id !== el.state.categorieSelectionnee)){
+                    //on supprime l'article des autres catégories
+                    idArticles.splice(idArticles.indexOf(el.props.match.params.id), 1)
+                    const data = {
+                        _id: categorie._id,
+                        nom: categorie.nom,
+                        idArticles: idArticles
+                    }
+                    fetch('http://localhost:8000/categorie', {
+                        method: 'PUT',
+                        body: JSON.stringify(data),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                }
+            })
+        }
+    )
+}
+
+function suppressionArticlesCategories(el) {
+    el.state.categories.map((categorie, key) => {
+        categorie.idArticles.map((article, keyArticle) => {
+            if (article === el.props.match.params.id){
+                //on supprime l'article des autres catégories
+                categorie.idArticles.splice(categorie.idArticles.indexOf(el.props.match.params.id), 1)
+                const data = {
+                    _id: categorie._id,
+                    nom: categorie.nom,
+                    idArticles: categorie.idArticles
+                }
+                fetch('http://localhost:8000/categorie', {
+                    method: 'PUT',
+                    body: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+            }
+        })
+    })
 }
 
 export default ArticleDetail;
