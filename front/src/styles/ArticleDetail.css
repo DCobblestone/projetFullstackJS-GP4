@@ -5,4 +5,5 @@
     flex-wrap: wrap;
     display: flex;
     width: 924px;
+    word-break: break-all;
 }

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import '../styles/Articles-form.css';
 import { Editor } from '@tinymce/tinymce-react';
 

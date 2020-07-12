@@ -97,6 +97,7 @@ class ArticleDetail extends Component {
                     )
                 }
             )
+            .then(this.handleRedirect)
     }
 
     componentDidMount() {
@@ -157,12 +158,8 @@ class ArticleDetail extends Component {
         }).then(this.handleRedirect)
     }
 
-    handleRedirect(res) {
-        if (res.status === 200) {
-            window.location.href = 'http://localhost:3000/'
-        } else {
-            console.log("error");
-        }
+    handleRedirect() {
+        window.location.href = 'http://localhost:3000/'
     }
 
 
@@ -290,8 +287,15 @@ class ArticleDetail extends Component {
                                     id="categorieSelectionnee"
                                     name="categorieSelectionnee"
                                     onChange={this.handleChange}>
-                                {this.state.categories.map((categorie, key) =>
-                                    <option value={categorie._id}>{categorie.nom}</option>
+                                {this.state.categories.map((categorie, key) =>{
+                                    if (categorie.idArticles.includes(this.props.match.params.id)){
+                                        return <option value={categorie._id} selected>{categorie.nom}</option>
+                                    }
+                                    else{
+                                        return <option value={categorie._id}>{categorie.nom}</option>
+                                    }
+                                }
+
                                 )}
                             </select>
                         </div>

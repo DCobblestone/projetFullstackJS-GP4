@@ -52,12 +52,12 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
             }
             //On enregistre dans la table 'url' l'objet url (le créer automatiquement)
             collection.insert(article);
-            collectionCategories('categorie').insert(categorie1);
-            collectionCategories('categorie').insert(categorie2);
-            collectionCategories('categorie').insert(categorie3);
-            collectionCategories('categorie').insert(categorie4);
-            collectionCategories('categorie').insert(categorie5);
-            collectionCategories('categorie').insert(categorie6);
+            collectionCategories.insert(categorie1);
+            collectionCategories.insert(categorie2);
+            collectionCategories.insert(categorie3);
+            collectionCategories.insert(categorie4);
+            collectionCategories.insert(categorie5);
+            collectionCategories.insert(categorie6);
 
             res.end('setup ok');
         })
@@ -88,7 +88,10 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
             .delete(function (req, res, next) {
                 collection.deleteOne({ _id: new ObjectId(req.params.id) }, function (err, result) {
                     if (err) throw err;
-                    res.json(result)
+                    res.json({
+                        status: 200,
+                        data: result
+                    })
                     console.log("deleted")
                 })
             })
