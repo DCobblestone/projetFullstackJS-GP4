@@ -1,3 +1,4 @@
+const http = require('http')
 const express = require('express')
 const hostname = 'localhost'
 const cors = require('cors')
@@ -67,25 +68,17 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
                     console.log(e);
                 };
             })
-        app.route('/article')
-            .put(function (req, res, next) {
-                try {
-                    collection.updateOne(
-                        { "_id": new ObjectId(req.body._id)}, // Filter
-                        {$set: {
-                            titre: req.body.titre,
-                            contenu: req.body.contenu,
-                            tag: req.body.tag,
-                            datePublication: req.body.datePublication,
-                            auteur: req.body.auteur
-                        }
-                        });
+
+        app.route('/article/search')
+            .post(function (req, res, next) {
+                collection.findOne({ titre: req.body.titre }, function (err, result
+                ) {
+                    if (err) throw err;
                     res.json({
-                        status:200
+                        status: 200,
+                        data: result
                     })
-                } catch (e) {
-                    console.log(e);
-                };
+                })
             })
 
         app.use(function (req, res) {
