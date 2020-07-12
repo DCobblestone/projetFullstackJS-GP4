@@ -58,43 +58,7 @@ class ArticleDetail extends Component {
         }).then(res => res.json())
             .then(
                 (result) => {
-                    this.state.categories.map((categorie, key) => {
-                        var idArticles = categorie.idArticles;
-                        if(categorie._id === this.state.categorieSelectionnee){
-                            idArticles.push(this.props.match.params.id)
-                            const data = {
-                                _id: this.state.categorieSelectionnee,
-                                nom: categorie.nom,
-                                idArticles: idArticles
-                            }
-                            fetch('http://localhost:8000/categorie', {
-                                method: 'PUT',
-                                body: JSON.stringify(data),
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                }
-                            })
-                        }
-                        categorie.idArticles.map((article, keyArticle) => {
-                            if ((article === this.props.match.params.id) && (categorie._id !== this.state.categorieSelectionnee)){
-                                //on supprime l'article des autres catégories
-                                idArticles.splice(idArticles.indexOf(this.props.match.params.id), 1)
-                                const data = {
-                                    _id: categorie._id,
-                                    nom: categorie.nom,
-                                    idArticles: idArticles
-                                }
-                                fetch('http://localhost:8000/categorie', {
-                                    method: 'PUT',
-                                    body: JSON.stringify(data),
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    }
-                                })
-                            }
-                        })
-                    }
-                    )
+                    updateArticlesCategories(this);
                 }
             )
             .then(this.handleRedirect)
@@ -136,9 +100,15 @@ class ArticleDetail extends Component {
             .then(
                 (result) => {
                     this.setState({
-                        categories: result.data,
-                        categorieSelectionnee: result.data[0]._id
+                        categories: result.data
                     });
+                    this.state.categories.map((categorie, key) =>{
+                        if (categorie.idArticles.includes(this.props.match.params.id)){
+                            this.setState({
+                                categorieSelectionnee: categorie._id
+                            });
+                        }
+                    })
                 },
                 (error) => {
                     this.setState({
@@ -155,7 +125,10 @@ class ArticleDetail extends Component {
             headers: {
                 "Content-Type": "application/json"
             }
-        }).then(this.handleRedirect)
+        }).then((res) => {
+            suppressionArticlesCategories(this);
+        })
+            .then(this.handleRedirect)
     }
 
     handleRedirect() {
@@ -312,6 +285,69 @@ class ArticleDetail extends Component {
             }
         }
     }
+}
+
+function updateArticlesCategories(el) {
+    el.state.categories.map((categorie, key) => {
+            var idArticles = categorie.idArticles;
+            if(categorie._id === el.state.categorieSelectionnee && !categorie.idArticles.includes(el.props.match.params.id)){
+                idArticles.push(el.props.match.params.id)
+                const data = {
+                    _id: el.state.categorieSelectionnee,
+                    nom: categorie.nom,
+                    idArticles: idArticles
+                }
+                fetch('http://localhost:8000/categorie', {
+                    method: 'PUT',
+                    body: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+            }
+            categorie.idArticles.map((article, keyArticle) => {
+                if ((article === el.props.match.params.id) && (categorie._id !== el.state.categorieSelectionnee)){
+                    //on supprime l'article des autres catégories
+                    idArticles.splice(idArticles.indexOf(el.props.match.params.id), 1)
+                    const data = {
+                        _id: categorie._id,
+                        nom: categorie.nom,
+                        idArticles: idArticles
+                    }
+                    fetch('http://localhost:8000/categorie', {
+                        method: 'PUT',
+                        body: JSON.stringify(data),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                }
+            })
+        }
+    )
+}
+
+function suppressionArticlesCategories(el) {
+    el.state.categories.map((categorie, key) => {
+        categorie.idArticles.map((article, keyArticle) => {
+            if (article === el.props.match.params.id){
+                //on supprime l'article des autres catégories
+                categorie.idArticles.splice(categorie.idArticles.indexOf(el.props.match.params.id), 1)
+                const data = {
+                    _id: categorie._id,
+                    nom: categorie.nom,
+                    idArticles: categorie.idArticles
+                }
+                fetch('http://localhost:8000/categorie', {
+                    method: 'PUT',
+                    body: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+            }
+        })
+    })
 }
 
 export default ArticleDetail;
