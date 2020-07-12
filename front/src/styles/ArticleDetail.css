@@ -1,3 +1,8 @@
+.card-articles.row {
+    margin-top: 30px;
+}
+
+
 .article-container{
     color: white;
     display: flex;
@@ -5,5 +10,18 @@
     flex-wrap: wrap;
     display: flex;
     width: 924px;
-    word-break: break-all;
+    word-break: break-word;
+    padding: 0 20px;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    border-left: 1px solid #3a3a3d;
+    text-align: center;
+}
+
+.actions .btn {
+    margin: 10px 0;
 }

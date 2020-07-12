@@ -74,9 +74,10 @@ class Search extends Component {
                     <div className="submit d-flex justify-content-end"><button className="btn btn-primary">Rechercher</button></div>
                 </form>
 
-                {/* {this.state.results.map((results, key) =>
+
+                {this.state.results.map((results, key) =>
                     <div>{results}</div>
-                )} */}
+                )}
             </div>
 
 

@@ -14,7 +14,7 @@ class ArticleDetail extends Component {
             showModifier: false,
             titre: '',
             contenu: '',
-            tag: '',
+            tag: [],
             datePublication: new Date().toLocaleString(),
             auteur: ''
         };
@@ -156,7 +156,7 @@ class ArticleDetail extends Component {
                             <span>{this.state.auteur} - {this.state.datePublication}</span>
                         </div>
                     </div>
-                    <div className="actions">
+                    <div className="actions col-md-2">
                         <h3>Actions</h3>
                         <br />
                         <a className="btn btn-primary" onClick={() => this.setState({ showModifier: true })}>Modifier</a>
