@@ -69,10 +69,10 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
                 };
             })
 
-        app.route('/article/search')
+        app.route('/article/search/titre')
             .post(function (req, res, next) {
-                collection.findOne({ titre: req.body.titre }, function (err, result
-                ) {
+                var regex = RegExp("." + req.body.titre + ".", 'i');
+                collection.find({ titre: regex }).toArray(function (err, result) {
                     if (err) throw err;
                     res.json({
                         status: 200,

@@ -9,7 +9,7 @@
 .card-articles{
     display: flex;
     justify-content: center;
-    width: calc(100% - 200px);
+    width: calc(100% - 300px);
 }
 
 .articles-container{
