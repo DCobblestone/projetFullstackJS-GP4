@@ -29,14 +29,14 @@ class ArticleForm extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
+        const tags = this.state.tag.split(',');
         const data = {
             titre: this.state.titre,
             contenu: this.state.contenu,
-            tag: this.state.tag,
+            tag: tags,
             datePublication: this.state.datePublication,
             auteur: this.state.auteur
         };
-
         fetch('http://localhost:8000/article', {
             method: 'POST',
             body: JSON.stringify(data),
@@ -58,8 +58,6 @@ class ArticleForm extends Component {
 
     render() {
         return (
-
-
             < form onSubmit={this.handleSubmit} className="cardForm">
                 <div className="form-group">
                     <div>
