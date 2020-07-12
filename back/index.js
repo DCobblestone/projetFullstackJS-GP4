@@ -15,6 +15,7 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
         var db = client.db('fullstack');
         var ObjectId = require('mongodb').ObjectId; //récupération de l'objectid
         var collection = db.collection('article');
+        var collectionCategories = db.collection('categorie')
 
         app.route('/setup').get(function(req, res, next){
             var article = {
@@ -51,12 +52,12 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
             }
             //On enregistre dans la table 'url' l'objet url (le créer automatiquement)
             collection.insert(article);
-            db.collection('categorie').insert(categorie1);
-            db.collection('categorie').insert(categorie2);
-            db.collection('categorie').insert(categorie3);
-            db.collection('categorie').insert(categorie4);
-            db.collection('categorie').insert(categorie5);
-            db.collection('categorie').insert(categorie6);
+            collectionCategories('categorie').insert(categorie1);
+            collectionCategories('categorie').insert(categorie2);
+            collectionCategories('categorie').insert(categorie3);
+            collectionCategories('categorie').insert(categorie4);
+            collectionCategories('categorie').insert(categorie5);
+            collectionCategories('categorie').insert(categorie6);
 
             res.end('setup ok');
         })
@@ -94,22 +95,18 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
 
         app.route('/article')
             .post(function (req, res, next) {
-                try {
-                    collection.insertOne({
-                        titre: req.body.titre,
-                        contenu: req.body.contenu,
-                        tag: req.body.tag,
-                        datePublication: req.body.datePublication,
-                        auteur: req.body.auteur
-                    }
-                    );
-                    res.json({
-                        status: 200,
-                        data: next
-                    })
-                } catch (e) {
-                    console.log(e);
-                };
+                collection.insertOne({
+                    titre: req.body.titre,
+                    contenu: req.body.contenu,
+                    tag: req.body.tag,
+                    datePublication: req.body.datePublication,
+                    auteur: req.body.auteur
+                }, function (err, result) {
+                    if (err) throw err;
+                    res.json(result)
+                    console.log("added")
+                })
+
             })
         app.route('/article')
             .put(function (req, res, next) {
@@ -123,6 +120,34 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
                             datePublication: req.body.datePublication,
                             auteur: req.body.auteur
                         }
+                        });
+                    res.json({
+                        status:200
+                    })
+                } catch (e) {
+                    console.log(e);
+                };
+            })
+
+        app.route('/categories')
+            .get(function (req, res, next) {
+                collectionCategories.find({}).toArray(function (err, result) {
+                    if (err) throw err;
+                    res.json({
+                        status: 200,
+                        data: result
+                    })
+                })
+            })
+        app.route('/categorie')
+            .put(function (req, res, next) {
+                try {
+                    collectionCategories.updateOne(
+                        { "_id": new ObjectId(req.body._id)}, // Filter
+                        {$set: {
+                                nom: req.body.nom,
+                                idArticles: req.body.idArticles
+                            }
                         });
                     res.json({
                         status:200
