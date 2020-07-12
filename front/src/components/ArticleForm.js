@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import '../styles/Articles-form.css';
+import { Editor } from '@tinymce/tinymce-react';
 
 class ArticleForm extends Component {
     constructor(props) {
@@ -25,6 +26,12 @@ class ArticleForm extends Component {
         this.setState({
             [name]: value
         });
+    }
+
+    handleEditorChange = (content, editor) => {
+        this.setState({
+            contenu: content
+        })
     }
 
     handleSubmit(event) {
@@ -79,14 +86,24 @@ class ArticleForm extends Component {
                     <div>
                         <label htmlFor="contenu">Contenu</label>
                     </div>
-                    <textarea
-                        className="form-control"
-                        rows="6"
-                        id="contenu"
-                        name="contenu"
-                        placeholder="Lorem ipsum dolor sit amet ..."
+                    <Editor
                         value={this.state.contenu}
-                        onChange={this.handleChange} />
+                        init={{
+                            height: 500,
+                            menubar: false,
+                            plugins: [
+                                'advlist autolink lists link image charmap print preview anchor',
+                                'searchreplace visualblocks code fullscreen',
+                                'insertdatetime media table paste code help wordcount'
+                            ],
+                            toolbar:
+                                'undo redo | formatselect | code bold italic backcolor | \
+                            alignleft aligncenter alignright alignjustify | \
+                            bullist numlist outdent indent | removeformat | help'
+                        }}
+                        onEditorChange={this.handleEditorChange}
+                    />
+
                 </div>
 
                 <div className="form-group">
@@ -132,7 +149,7 @@ class ArticleForm extends Component {
                         onChange={this.handleChange} />
                 </div>
 
-                <div className="submit"><button className="btn btn-primary">Enregistrer</button></div>
+                <div className="submit d-flex justify-content-end"><button className="btn btn-success">Enregistrer</button></div>
 
             </form >
         )

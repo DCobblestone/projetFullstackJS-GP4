@@ -13,11 +13,12 @@ class ArticleDetail extends Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:8000/article/'+this.props.match.params.id, {
+        fetch('http://localhost:8000/article/' + this.props.match.params.id, {
             method: 'GET',
             headers: {
                 "Content-Type": "application/json"
-            }})
+            }
+        })
             .then(res => res.json())
             .then(
                 (result) => {
@@ -48,7 +49,9 @@ class ArticleDetail extends Component {
                     <div className="article-container">
                         <div>
                             <h1>{this.state.data.data.titre}</h1>
-                            <p>{this.state.data.data.contenu}</p>
+                            {/* <p>{this.state.data.data.contenu}</p> */}
+                            {/* {this.state.data.data.contenu} */}
+                            <div dangerouslySetInnerHTML={{ __html: this.state.data.data.contenu }} />
                         </div>
                         <div>
                             <span>{this.state.data.data.auteur} - {this.state.data.data.datePublication}</span>
