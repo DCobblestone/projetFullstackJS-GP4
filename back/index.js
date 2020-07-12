@@ -35,11 +35,20 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
                 ) {
                     if (err) throw err;
                     res.json({
-                        status:200,
+                        status: 200,
                         data: result
                     })
                 })
             })
+
+            .delete(function (req, res, next) {
+                collection.deleteOne({ _id: new ObjectId(req.params.id) }, function (err, result) {
+                    if (err) throw err;
+                    res.json(result)
+                    console.log("deleted")
+                })
+            })
+
         app.route('/article')
             .post(function (req, res, next) {
                 try {

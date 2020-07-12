@@ -10,6 +10,7 @@ class ArticleDetail extends Component {
             isLoaded: false,
             data: null
         };
+        this.delete = this.delete.bind(this);
     }
 
     componentDidMount() {
@@ -36,6 +37,24 @@ class ArticleDetail extends Component {
             )
     }
 
+    delete() {
+        fetch('http://localhost:8000/article/' + this.props.match.params.id, {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(this.handleRedirect)
+    }
+
+    handleRedirect(res) {
+        if (res.status === 200) {
+            window.location.href = 'http://localhost:3000/'
+        } else {
+            console.log("error");
+        }
+    }
+
+
     render() {
         const { error, isLoaded, data } = this.state;
         if (error) {
@@ -44,18 +63,25 @@ class ArticleDetail extends Component {
             return <div>Chargement…</div>;
         } else {
             // Pas d'erreur et les données sont bien chargées, on affiche le résultat de notre requête.
+
             return (
-                <div className="card-articles">
+                <div className="card-articles row">
                     <div className="article-container">
                         <div>
                             <h1>{this.state.data.data.titre}</h1>
-                            {/* <p>{this.state.data.data.contenu}</p> */}
-                            {/* {this.state.data.data.contenu} */}
+                            {/* Affiche les données formatées en tant qu'HTML */}
                             <div dangerouslySetInnerHTML={{ __html: this.state.data.data.contenu }} />
                         </div>
                         <div>
                             <span>{this.state.data.data.auteur} - {this.state.data.data.datePublication}</span>
                         </div>
+                    </div>
+                    <div className="actions">
+                        <h3>Actions</h3>
+                        <br />
+                        <a className="btn btn-danger" onClick={() => this.delete(this.state.data.data._id)}>Supprimer</a>
+
+
                     </div>
                 </div>
             );
