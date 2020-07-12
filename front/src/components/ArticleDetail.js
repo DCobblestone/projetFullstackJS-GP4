@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../styles/ArticleDetail.css';
-import {Editor} from "@tinymce/tinymce-react";
+import { Editor } from "@tinymce/tinymce-react";
 
 class ArticleDetail extends Component {
 
@@ -102,8 +102,8 @@ class ArticleDetail extends Component {
                     this.setState({
                         categories: result.data
                     });
-                    this.state.categories.map((categorie, key) =>{
-                        if (categorie.idArticles.includes(this.props.match.params.id)){
+                    this.state.categories.map((categorie, key) => {
+                        if (categorie.idArticles.includes(this.props.match.params.id)) {
                             this.setState({
                                 categorieSelectionnee: categorie._id
                             });
@@ -142,7 +142,7 @@ class ArticleDetail extends Component {
             return <div>Erreur : {error.message}</div>;
         } else if (!isLoaded) {
             return <div>Chargement…</div>;
-        } else if (!showModifier){
+        } else if (!showModifier) {
             // Pas d'erreur et les données sont bien chargées, on affiche le résultat de notre requête.
             return (
                 <div className="card-articles row">
@@ -159,7 +159,7 @@ class ArticleDetail extends Component {
                     <div className="actions">
                         <h3>Actions</h3>
                         <br />
-                        <a className="btn btn-primary" onClick={() => this.setState({ showModifier : true} )}>Modifier</a>
+                        <a className="btn btn-primary" onClick={() => this.setState({ showModifier: true })}>Modifier</a>
                         <a className="btn btn-danger" onClick={() => { if (window.confirm('Voulez-vous vraiment supprimer ce chef d\'oeuvre ?')) this.delete(this.props.match.params.id) }}>Supprimer</a>
 
 
@@ -168,7 +168,7 @@ class ArticleDetail extends Component {
             );
         }
         else {
-            if (this.state.categories != null){
+            if (this.state.categories != null) {
                 return (
                     < form onSubmit={this.handleSubmit} className="cardForm">
                         <div className="form-group">
@@ -202,7 +202,7 @@ class ArticleDetail extends Component {
                                     toolbar:
                                         'undo redo | formatselect | code bold italic backcolor | \
                                     alignleft aligncenter alignright alignjustify | \
-                                    bullist numlist outdent indent | removeformat | help'
+                                    image bullist numlist outdent indent | removeformat | help'
                                 }}
                                 onEditorChange={this.handleEditorChange}
                             />
@@ -257,14 +257,14 @@ class ArticleDetail extends Component {
                                 <label htmlFor="categorie">Catégorie</label>
                             </div>
                             <select className="form-control"
-                                    id="categorieSelectionnee"
-                                    name="categorieSelectionnee"
-                                    onChange={this.handleChange}>
-                                {this.state.categories.map((categorie, key) =>{
-                                    if (categorie.idArticles.includes(this.props.match.params.id)){
+                                id="categorieSelectionnee"
+                                name="categorieSelectionnee"
+                                onChange={this.handleChange}>
+                                {this.state.categories.map((categorie, key) => {
+                                    if (categorie.idArticles.includes(this.props.match.params.id)) {
                                         return <option value={categorie._id} selected>{categorie.nom}</option>
                                     }
-                                    else{
+                                    else {
                                         return <option value={categorie._id}>{categorie.nom}</option>
                                     }
                                 }
@@ -289,11 +289,28 @@ class ArticleDetail extends Component {
 
 function updateArticlesCategories(el) {
     el.state.categories.map((categorie, key) => {
-            var idArticles = categorie.idArticles;
-            if(categorie._id === el.state.categorieSelectionnee && !categorie.idArticles.includes(el.props.match.params.id)){
-                idArticles.push(el.props.match.params.id)
+        var idArticles = categorie.idArticles;
+        if (categorie._id === el.state.categorieSelectionnee && !categorie.idArticles.includes(el.props.match.params.id)) {
+            idArticles.push(el.props.match.params.id)
+            const data = {
+                _id: el.state.categorieSelectionnee,
+                nom: categorie.nom,
+                idArticles: idArticles
+            }
+            fetch('http://localhost:8000/categorie', {
+                method: 'PUT',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+        }
+        categorie.idArticles.map((article, keyArticle) => {
+            if ((article === el.props.match.params.id) && (categorie._id !== el.state.categorieSelectionnee)) {
+                //on supprime l'article des autres catégories
+                idArticles.splice(idArticles.indexOf(el.props.match.params.id), 1)
                 const data = {
-                    _id: el.state.categorieSelectionnee,
+                    _id: categorie._id,
                     nom: categorie.nom,
                     idArticles: idArticles
                 }
@@ -305,32 +322,15 @@ function updateArticlesCategories(el) {
                     }
                 })
             }
-            categorie.idArticles.map((article, keyArticle) => {
-                if ((article === el.props.match.params.id) && (categorie._id !== el.state.categorieSelectionnee)){
-                    //on supprime l'article des autres catégories
-                    idArticles.splice(idArticles.indexOf(el.props.match.params.id), 1)
-                    const data = {
-                        _id: categorie._id,
-                        nom: categorie.nom,
-                        idArticles: idArticles
-                    }
-                    fetch('http://localhost:8000/categorie', {
-                        method: 'PUT',
-                        body: JSON.stringify(data),
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    })
-                }
-            })
-        }
+        })
+    }
     )
 }
 
 function suppressionArticlesCategories(el) {
     el.state.categories.map((categorie, key) => {
         categorie.idArticles.map((article, keyArticle) => {
-            if (article === el.props.match.params.id){
+            if (article === el.props.match.params.id) {
                 //on supprime l'article des autres catégories
                 categorie.idArticles.splice(categorie.idArticles.indexOf(el.props.match.params.id), 1)
                 const data = {

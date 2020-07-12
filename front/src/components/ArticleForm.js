@@ -60,7 +60,7 @@ class ArticleForm extends Component {
             contenu: content
         })
     }
-//On insère l'article et on met son id dans la catégorie adéquate
+    //On insère l'article et on met son id dans la catégorie adéquate
     handleSubmit(event) {
         event.preventDefault();
         const tags = this.state.tag.split(',');
@@ -78,29 +78,30 @@ class ArticleForm extends Component {
                 'Content-Type': 'application/json'
             }
         })
-        .then(res => res.json())
-        .then(
-            (result) => {
-                this.state.categories.map((categorie, key) => {
-                    if(categorie._id === this.state.categorieSelectionnee){
-                        var idArticles = categorie.idArticles;
-                        idArticles.push(result.insertedId)
-                        const data = {
-                            _id: this.state.categorieSelectionnee,
-                            nom: categorie.nom,
-                            idArticles: idArticles
-                        }
-                        fetch('http://localhost:8000/categorie', {
-                            method: 'PUT',
-                            body: JSON.stringify(data),
-                            headers: {
-                                'Content-Type': 'application/json'
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.state.categories.map((categorie, key) => {
+                        if (categorie._id === this.state.categorieSelectionnee) {
+                            var idArticles = categorie.idArticles;
+                            idArticles.push(result.insertedId)
+                            const data = {
+                                _id: this.state.categorieSelectionnee,
+                                nom: categorie.nom,
+                                idArticles: idArticles
                             }
-                        }).then(this.handleRedirect)
-                    }}
-                )
-            }
-        )
+                            fetch('http://localhost:8000/categorie', {
+                                method: 'PUT',
+                                body: JSON.stringify(data),
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                }
+                            }).then(this.handleRedirect)
+                        }
+                    }
+                    )
+                }
+            )
     }
 
     handleRedirect(res) {
@@ -112,7 +113,7 @@ class ArticleForm extends Component {
     }
 
     render() {
-        if (this.state.categories != null){
+        if (this.state.categories != null) {
             return (
                 < form onSubmit={this.handleSubmit} className="cardForm">
                     <div className="form-group">
@@ -146,7 +147,7 @@ class ArticleForm extends Component {
                                 toolbar:
                                     'undo redo | formatselect | code bold italic backcolor | \
                                 alignleft aligncenter alignright alignjustify | \
-                                bullist numlist outdent indent | removeformat | help'
+                                image bullist numlist outdent indent | removeformat | help'
                             }}
                             onEditorChange={this.handleEditorChange}
                         />
@@ -200,9 +201,9 @@ class ArticleForm extends Component {
                             <label htmlFor="categorie">Catégorie</label>
                         </div>
                         <select className="form-control"
-                                id="categorieSelectionnee"
-                                name="categorieSelectionnee"
-                                onChange={this.handleChange}>
+                            id="categorieSelectionnee"
+                            name="categorieSelectionnee"
+                            onChange={this.handleChange}>
                             {this.state.categories.map((categorie, key) =>
                                 <option value={categorie._id}>{categorie.nom}</option>
                             )}
