@@ -11,21 +11,23 @@ import ArticleDetail from './ArticleDetail';
 import Navigation from './Navigation';
 
 class App extends Component {
+
   render() {
     return (
       <BrowserRouter>
         <div>
           <Header />
           <div className="row accueil">
-              <Navigation />
-              <Switch>
-                  <Route path="/" component={Articles} exact/>
-                  <Route path="/articles-form" component={ArticleForm} exact />
-                  <Route path="/article/:id" component={ArticleDetail} exact />
-              </Switch>
+            <Navigation />
+            <Switch>
+              <Route path="/" component={Articles} exact />
+              <Route path="/articles-form" component={ArticleForm} exact />
+              <Route path="/article/:id" component={ArticleDetail} exact />
+            </Switch>
           </div>
         </div>
       </BrowserRouter>
+
     )
   }
 

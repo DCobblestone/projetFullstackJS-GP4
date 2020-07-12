@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
+
 class Search extends Component {
     constructor(props) {
         super(props);
@@ -38,8 +39,10 @@ class Search extends Component {
             .then(
                 (result) => {
                     this.setState({
-                        results: result
+                        results: result.data
                     });
+                }, () => {
+                    this.props.history.push("/");
                 },
                 (error) => {
                     this.setState({
@@ -49,28 +52,25 @@ class Search extends Component {
             )
     };
 
-
-
-
     render() {
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
-                    <div className="form-group">
-                        <div>
-                            <label htmlFor="term">Rechercher un article</label>
-                        </div>
+                    <div className="form-group d-flex col-md-10">
                         <input
                             className="form-control"
                             id="term"
                             name="term"
                             type="text"
-                            placeholder="Recherche par titre ou tag"
+                            placeholder="Titre ou tag"
                             value={this.state.term}
                             onChange={this.handleChange} />
+                        <div class="input-group-append">
+                            <button className="btn btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
+                        </div>
                     </div>
 
-                    <div className="submit d-flex justify-content-end"><button className="btn btn-primary">Rechercher</button></div>
+                    {/* <div className="submit d-flex justify-content-end"><button className="btn btn-primary">Rechercher</button></div> */}
                 </form>
 
             </div>

@@ -7,9 +7,10 @@ import Search from './Search'
 const Navigation = () => {
     return (
         <div className="drawernav">
+            <Search />
+            <br></br>
             <div><NavLink to="/">Accueil</NavLink></div>
             <div><NavLink to="/articles-form">Ajouter un article</NavLink></div>
-            <Search />
         </div>
     );
 }

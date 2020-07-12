@@ -8,7 +8,8 @@ class Articles extends Component {
         this.state = {
             error: null,
             isLoaded: false,
-            data: null
+            data: null,
+            results: ''
         };
     }
 
