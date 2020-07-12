@@ -6,7 +6,7 @@ class Search extends Component {
         super(props);
         this.state = {
             results: [],
-            titre: ''
+            term: ''
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -26,9 +26,9 @@ class Search extends Component {
     handleSubmit(event) {
         event.preventDefault();
         const data = {
-            titre: this.state.titre
+            term: this.state.term
         };
-        fetch('http://localhost:8000/article/search/titre', {
+        fetch('http://localhost:8000/article/search', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -40,7 +40,6 @@ class Search extends Component {
                     this.setState({
                         results: result
                     });
-                    console.log(this.state.results)
                 },
                 (error) => {
                     this.setState({
@@ -59,15 +58,15 @@ class Search extends Component {
                 <form onSubmit={this.handleSubmit}>
                     <div className="form-group">
                         <div>
-                            <label htmlFor="titre">Recherche par titre</label>
+                            <label htmlFor="term">Rechercher un article</label>
                         </div>
                         <input
                             className="form-control"
-                            id="titre"
-                            name="titre"
+                            id="term"
+                            name="term"
                             type="text"
-                            placeholder="Recherche par titre"
-                            value={this.state.titre}
+                            placeholder="Recherche par titre ou tag"
+                            value={this.state.term}
                             onChange={this.handleChange} />
                     </div>
 

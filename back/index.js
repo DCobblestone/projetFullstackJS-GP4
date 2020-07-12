@@ -54,6 +54,7 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
             }
             //On enregistre dans la table 'url' l'objet url (le créer automatiquement)
             collection.insert(article);
+            collection.createIndex({ titre: "text", tag: "text" });
             collectionCategories.insert(categorie1);
             collectionCategories.insert(categorie2);
             collectionCategories.insert(categorie3);
@@ -134,10 +135,14 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
                 };
             })
 
-        app.route('/article/search/titre')
+        app.route('/article/search')
             .post(function (req, res, next) {
-                var regex = RegExp("." + req.body.titre + ".");
-                collection.find({ titre: regex }).toArray(function (err, result) {
+                collection.find({
+                    $text:
+                    {
+                        $search: req.body.term
+                    }
+                }).toArray(function (err, result) {
                     if (err) throw err;
                     res.json({
                         status: 200,

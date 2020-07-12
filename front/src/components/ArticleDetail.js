@@ -12,7 +12,6 @@ class ArticleDetail extends Component {
             error: null,
             isLoaded: false,
             showModifier: false,
-            _id: '',
             titre: '',
             contenu: '',
             tag: [],
