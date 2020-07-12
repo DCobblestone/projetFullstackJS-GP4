@@ -127,7 +127,7 @@ class ArticleDetail extends Component {
                         <h3>Actions</h3>
                         <br />
                         <a className="btn btn-primary" onClick={() => this.setState({ showModifier : true} )}>Modifier</a>
-                        <a className="btn btn-danger" onClick={() => { if (window.confirm('Voulez-vous vraiment supprimer ce chef d\'oeuvre ?')) this.delete(this.state.data.data._id) }}>Supprimer</a>
+                        <a className="btn btn-danger" onClick={() => { if (window.confirm('Voulez-vous vraiment supprimer ce chef d\'oeuvre ?')) this.delete(this.props.match.params.id) }}>Supprimer</a>
 
 
                     </div>
