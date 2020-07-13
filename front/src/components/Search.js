@@ -65,12 +65,10 @@ class Search extends Component {
                             placeholder="Titre ou tag"
                             value={this.state.term}
                             onChange={this.handleChange} />
-                        <div class="input-group-append">
+                        <div className="input-group-append">
                             <button className="btn btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
                         </div>
                     </div>
-
-                    {/* <div className="submit d-flex justify-content-end"><button className="btn btn-primary">Rechercher</button></div> */}
                 </form>
 
             </div>

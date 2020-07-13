@@ -2,6 +2,7 @@ const http = require('http')
 const express = require('express')
 const hostname = 'localhost'
 const cors = require('cors')
+const { pipeline } = require('stream')
 const port = 8000
 const app = express()
 
@@ -178,6 +179,33 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
                 } catch (e) {
                     console.log(e);
                 };
+            })
+
+
+        // Récupérer les articles d'une catégorie selon le nom de la catégorie
+        // Attention : il faut que l'idArticles dans la collection categorie soit de type ObjectId !
+        app.route('/categorie/Autres')
+            .get(function (req, res, next) {
+                collection.aggregate([
+                    {
+                        '$lookup': {
+                            'from': 'article',
+                            'localField': 'idArticles',
+                            'foreignField': '_id',
+                            'as': 'articles'
+                        }
+                    }, {
+                        '$match': {
+                            'nom': "Autres"
+                        }
+                    }
+                ]).toArray(function (err, result) {
+                    if (err) throw err;
+                    res.json({
+                        status: 200,
+                        data: result
+                    })
+                })
             })
 
         app.use(function (req, res) {
