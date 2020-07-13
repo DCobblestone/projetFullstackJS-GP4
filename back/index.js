@@ -1,8 +1,6 @@
-const http = require('http')
 const express = require('express')
 const hostname = 'localhost'
 const cors = require('cors')
-const { pipeline } = require('stream')
 const port = 8000
 const app = express()
 
@@ -47,7 +45,7 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
             }
             var categorie5 = {
                 nom: "Faits divers",
-                idArticles: ["5f0b043eafec7822948984b6"]
+                idArticles: [new ObjectId("5f0b043eafec7822948984b6")]
             }
             var categorie6 = {
                 nom: "Autres",
@@ -164,13 +162,14 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
             })
         app.route('/categorie')
             .put(function (req, res, next) {
+                let objectIdArray = req.body.idArticles.map(s => ObjectId(s));
                 try {
                     collectionCategories.updateOne(
                         { "_id": new ObjectId(req.body._id) }, // Filter
                         {
                             $set: {
                                 nom: req.body.nom,
-                                idArticles: req.body.idArticles
+                                idArticles: objectIdArray
                             }
                         });
                     res.json({
@@ -184,9 +183,9 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
 
         // Récupérer les articles d'une catégorie selon le nom de la catégorie
         // Attention : il faut que l'idArticles dans la collection categorie soit de type ObjectId !
-        app.route('/categorie/Autres')
+        app.route('/categorie/:nomCategorie')
             .get(function (req, res, next) {
-                collection.aggregate([
+                collectionCategories.aggregate([
                     {
                         '$lookup': {
                             'from': 'article',
@@ -196,7 +195,7 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
                         }
                     }, {
                         '$match': {
-                            'nom': "Autres"
+                            'nom': req.params.nomCategorie
                         }
                     }
                 ]).toArray(function (err, result) {

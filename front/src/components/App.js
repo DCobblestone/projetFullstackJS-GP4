@@ -9,6 +9,7 @@ import Articles from "./Articles";
 import ArticleForm from './ArticleForm';
 import ArticleDetail from './ArticleDetail';
 import Navigation from './Navigation';
+import ArticleCategorie from "./ArticleCategorie";
 
 class App extends Component {
 
@@ -23,6 +24,7 @@ class App extends Component {
               <Route path="/" component={Articles} exact />
               <Route path="/articles-form" component={ArticleForm} exact />
               <Route path="/article/:id" component={ArticleDetail} exact />
+              <Route path="/articles/:id" component={ArticleCategorie} exact />
             </Switch>
           </div>
         </div>

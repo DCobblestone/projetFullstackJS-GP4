@@ -5,6 +5,7 @@
     box-shadow: 5px 8px 9px 0px #212121;
     max-width: 300px;
     min-height: calc(100vh - 150px);
+    color: white;
 }
 
 .drawernav a {
@@ -14,5 +15,9 @@
 .drawernav a:hover {
     text-decoration: none;
     color: #007bff;
-
 }
+
+ul{
+    list-style-type: none;
+}
+

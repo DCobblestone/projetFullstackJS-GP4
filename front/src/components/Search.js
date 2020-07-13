@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
 
 
 class Search extends Component {
@@ -66,7 +65,7 @@ class Search extends Component {
                             value={this.state.term}
                             onChange={this.handleChange} />
                         <div className="input-group-append">
-                            <button className="btn btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
+                            <button className="btn btn-outline-secondary" type="submit"><i className="fas fa-search"></i></button>
                         </div>
                     </div>
                 </form>
