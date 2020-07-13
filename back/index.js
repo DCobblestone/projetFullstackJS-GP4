@@ -136,12 +136,13 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
 
         app.route('/article/search')
             .post(function (req, res, next) {
-                collection.find({
-                    $text:
-                    {
-                        $search: req.body.term
-                    }
-                }).toArray(function (err, result) {
+                collection.find(
+                    {$or: [
+                            {titre: {$regex: req.body.term, $options: 'i'}},
+                            {tag: {$regex:req.body.term, $options: 'i'}}
+                          ]
+                    })
+                    .toArray(function (err, result) {
                     if (err) throw err;
                     res.json({
                         status: 200,
