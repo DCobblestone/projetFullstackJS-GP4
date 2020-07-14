@@ -2,13 +2,10 @@ import React from 'react';
 
 import { NavLink } from 'react-router-dom';
 import '../styles/Navigation.css';
-import Search from './Search'
 
 const Navigation = () => {
     return (
         <div className="drawernav">
-            <Search />
-            <br></br>
             <div><NavLink to="/">Accueil</NavLink></div>
             <div><NavLink to="/articles-form">Ajouter un article</NavLink></div>
             <div>Catégories</div>
@@ -22,6 +19,8 @@ const Navigation = () => {
                     <li><NavLink to={{pathname:'/articles/Autres'}}>Autres</NavLink></li>
                 </ul>
             </div>
+            <br></br>
+            <NavLink to="/search" >Rechercher un article</NavLink>
         </div>
     );
 }
