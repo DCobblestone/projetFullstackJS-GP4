@@ -119,11 +119,15 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
         app.route('/article')
             .post(function (req, res, next) {
                 collection.insertOne({
-                    titre: req.body.titre,
-                    contenu: req.body.contenu,
-                    tag: req.body.tag,
-                    datePublication: req.body.datePublication,
-                    auteur: req.body.auteur
+                    current: {
+                        v: 1,
+                        titre: req.body.titre,
+                        contenu: req.body.contenu,
+                        tag: req.body.tag,
+                        datePublication: req.body.datePublication,
+                        auteur: req.body.auteur
+                    },
+                    prev: []
                 }, function (err, result) {
                     if (err) throw err;
                     res.json(result)
