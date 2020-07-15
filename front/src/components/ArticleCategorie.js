@@ -39,11 +39,10 @@ class ArticleCategorie extends Component {
             )
     }
 
-    componentDidUpdate (prevProps, prevState) {
-        console.log("url: "+this.props.match.params.id)
+    componentDidUpdate(prevProps, prevState) {
+        console.log("url: " + this.props.match.params.id)
         console.log("avant : " + prevProps.match.params.id)
-        if (this.props.match.params.id !== prevProps.match.params.id)
-        {
+        if (this.props.match.params.id !== prevProps.match.params.id) {
             this.setState({
                 isLoaded: false
             });
@@ -86,21 +85,20 @@ class ArticleCategorie extends Component {
             return (
                 <div className="card-articles">
                     <div className="articles-container">
-
                         {this.state.data.map((item, index) =>
                             <div className="card" key={index}>
                                 <div className="card-body">
                                     <div className="part1">
-                                        <h5 className="card-title">{item.titre}</h5>
-                                        <div className="card-text truncate" dangerouslySetInnerHTML={{ __html: item.contenu }} />
+                                        <h5 className="card-title">{item.current.titre}</h5>
+                                        <div className="card-text truncate" dangerouslySetInnerHTML={{ __html: item.current.contenu }} />
                                     </div>
                                     <div className="part2">
-                                        <p className="card-text"><i>{item.auteur} - {item.datePublication}</i></p>
+                                        <p className="card-text"><i>{item.current.auteur} - {item.current.datePublication}</i></p>
                                         <a href={'/article/' + item._id} className="btn btn-primary">Lire la suite</a>
                                     </div>
                                 </div>
                                 <div className="tags">
-                                    {item.tag.map((tag, key) =>
+                                    {item.current.tag.map((tag, key) =>
                                         <div>{tag}</div>
                                     )}
                                 </div>

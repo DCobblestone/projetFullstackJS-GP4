@@ -17,6 +17,18 @@
     padding: 0 20px;
 }
 
+.restore-container {
+    margin-top: 30px;
+    padding: 20px;
+    font-size: .9em;
+}
+
+.option {
+    border-left: 1px solid #3a3a3d;
+    padding: 20px;
+    margin-bottom: 40px;
+}
+
 .actions {
     display: flex;
     flex-direction: column;

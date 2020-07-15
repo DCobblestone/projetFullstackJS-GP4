@@ -41,7 +41,7 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
                         v: 1,
                         titre: "Premier article !",
                         contenu: "Lorem ipsum dolor sit amet, consectetuliquam risus lectus, sed efficitur nisl ullamcorper nec. Lorem ipsum dolor sit amet, consectetuliquam risus lectus, sed efficitur nisl ullamcorper nec.",
-                        tag: '',
+                        tag: [],
                         datePublication: "11/07/2020",
                         auteur: "Bastien Proudhom"
                     }
