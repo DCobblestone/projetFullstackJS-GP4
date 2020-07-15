@@ -12,6 +12,7 @@ class ArticleDetail extends Component {
             error: null,
             isLoaded: false,
             showModifier: false,
+            v: '',
             titre: '',
             contenu: '',
             tag: [],
@@ -43,6 +44,7 @@ class ArticleDetail extends Component {
         const tags = this.state.tag.split(',');
         const data = {
             _id: this.props.match.params.id,
+            v: this.state.v,
             titre: this.state.titre,
             contenu: this.state.contenu,
             tag: tags,
@@ -76,6 +78,7 @@ class ArticleDetail extends Component {
                 (result) => {
                     this.setState({
                         isLoaded: true,
+                        v: result.data.current.v,
                         titre: result.data.current.titre,
                         contenu: result.data.current.contenu,
                         tag: result.data.current.tag.join(","),

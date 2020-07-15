@@ -135,19 +135,30 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
                 })
 
             })
+
+
             .put(function (req, res, next) {
                 try {
-                    collection.updateOne(
-                        { "_id": new ObjectId(req.body._id) }, // Filter
-                        {
-                            $set: {
-                                titre: req.body.titre,
-                                contenu: req.body.contenu,
-                                tag: req.body.tag,
-                                datePublication: req.body.datePublication,
-                                auteur: req.body.auteur
-                            }
-                        });
+                    var doc;
+                    // Récupérer l'objet à modifier
+                    collection.findOne({ _id: new ObjectId(req.body._id) }, function (err, result
+                    ) {
+                        doc = result;
+                        // Récupérer son numéro de version
+                        var currV = doc.current.v;
+                        // Sauvegarder l'état pré-modification dans la tableau "previous"
+                        doc.prev.push(doc.current);
+                        // Créer le nouvel état current
+                        doc.current = {
+                            v: currV + 1,
+                            titre: req.body.titre,
+                            contenu: req.body.contenu,
+                            tag: req.body.tag,
+                            datePublication: req.body.datePublication,
+                            auteur: req.body.auteur
+                        };
+                        collection.updateOne({ _id: new ObjectId(req.body._id) }, { $set: doc })
+                    });
                     res.json({
                         status: 200
                     })
