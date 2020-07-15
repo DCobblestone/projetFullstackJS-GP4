@@ -20,11 +20,29 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
         app.route('/setup').get(function (req, res, next) {
             var article = {
                 _id: new ObjectId("5f0b043eafec7822948984b6"),
-                titre: "Premier article !",
-                contenu: "Lorem ipsum dolor sit amet, consectetuliquam risus lectus, sed efficitur nisl ullamcorper nec. Lorem ipsum dolor sit amet, consectetuliquam risus lectus, sed efficitur nisl ullamcorper nec.",
-                tag: ["Sciences"],
-                datePublication: "11/07/2020",
-                auteur: "Bastien Proudhom"
+                current: {
+                    v: 3,
+                    titre: "Premier article !",
+                    contenu: "Lorem ipsum dolor sit amet, consectetuliquam risus lectus, sed efficitur nisl ullamcorper nec. Lorem ipsum dolor sit amet, consectetuliquam risus lectus, sed efficitur nisl ullamcorper nec.",
+                    tag: ["Sciences"],
+                    datePublication: "11/07/2020",
+                    auteur: "Bastien Proudhom"
+                },
+                prev: [
+                    {
+                        v: 2,
+                        titre: "Premier article !",
+                        tag: ["Sciences"],
+                        datePublication: "11/07/2020",
+                        auteur: "Bastien Proudhom"
+                    },
+                    {
+                        v: 1,
+                        titre: "Premier article !",
+                        datePublication: "11/07/2020",
+                        auteur: "Bastien Proudhom"
+                    }
+                ]
             }
 
             var categorie1 = {
@@ -77,7 +95,7 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
             })
         app.route('/article/:id')
             .get(function (req, res, next) {
-                collection.findOne({ _id: new ObjectId(req.params.id) }, function (err, result
+                collection.findOne({ _id: new ObjectId(req.params.id) }, { "prev": 0 }, function (err, result
                 ) {
                     if (err) throw err;
                     res.json({
@@ -137,18 +155,19 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
         app.route('/article/search')
             .post(function (req, res, next) {
                 collection.find(
-                    {$or: [
-                            {titre: {$regex: req.body.term, $options: 'i'}},
-                            {tag: {$regex:req.body.term, $options: 'i'}}
-                          ]
+                    {
+                        $or: [
+                            { "current.titre": { $regex: req.body.term, $options: 'i' } },
+                            { "current.tag": { $regex: req.body.term, $options: 'i' } }
+                        ]
                     })
                     .toArray(function (err, result) {
-                    if (err) throw err;
-                    res.json({
-                        status: 200,
-                        data: result
+                        if (err) throw err;
+                        res.json({
+                            status: 200,
+                            data: result
+                        })
                     })
-                })
             })
 
         app.route('/categories')

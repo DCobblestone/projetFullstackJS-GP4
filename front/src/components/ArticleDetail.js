@@ -76,11 +76,12 @@ class ArticleDetail extends Component {
                 (result) => {
                     this.setState({
                         isLoaded: true,
-                        titre: result.data.titre,
-                        contenu: result.data.contenu,
-                        tag: result.data.tag.join(","),
-                        datePublication: result.data.datePublication,
-                        auteur: result.data.auteur
+                        titre: result.data.current.titre,
+                        contenu: result.data.current.contenu,
+                        tag: result.data.current.tag.join(","),
+                        datePublication: result.data.current.datePublication,
+                        auteur: result.data.current.auteur,
+                        current: result.data.current.v,
                     });
                 },
                 (error) => {
@@ -158,6 +159,8 @@ class ArticleDetail extends Component {
                     </div>
                     <div className="actions col-md-2">
                         <h3>Actions</h3>
+                        <br />
+                        <p>Version : {this.state.current}</p>
                         <br />
                         <a className="btn btn-primary" onClick={() => this.setState({ showModifier: true })}>Modifier</a>
                         <a className="btn btn-danger" onClick={() => { if (window.confirm('Voulez-vous vraiment supprimer ce chef d\'oeuvre ?')) this.delete(this.props.match.params.id) }}>Supprimer</a>
