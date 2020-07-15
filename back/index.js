@@ -32,6 +32,7 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
                     {
                         v: 2,
                         titre: "Premier article !",
+                        contenu: "Lorem ipsum dolor sit amet, consectetuliquam risus lectus, sed efficitur nisl ullamcorper nec. Lorem ipsum dolor sit amet, consectetuliquam risus lectus, sed efficitur nisl ullamcorper nec.",
                         tag: ["Sciences"],
                         datePublication: "11/07/2020",
                         auteur: "Bastien Proudhom"
@@ -39,6 +40,8 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
                     {
                         v: 1,
                         titre: "Premier article !",
+                        contenu: "Lorem ipsum dolor sit amet, consectetuliquam risus lectus, sed efficitur nisl ullamcorper nec. Lorem ipsum dolor sit amet, consectetuliquam risus lectus, sed efficitur nisl ullamcorper nec.",
+                        tag: '',
                         datePublication: "11/07/2020",
                         auteur: "Bastien Proudhom"
                     }
@@ -133,9 +136,7 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
                     res.json(result)
                     console.log("added")
                 })
-
             })
-
 
             .put(function (req, res, next) {
                 try {
@@ -166,6 +167,9 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
                     console.log(e);
                 };
             })
+
+        app.route('/article/:id/restore')
+
 
         app.route('/article/search')
             .post(function (req, res, next) {

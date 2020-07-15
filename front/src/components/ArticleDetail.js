@@ -17,7 +17,9 @@ class ArticleDetail extends Component {
             contenu: '',
             tag: [],
             datePublication: new Date().toLocaleString(),
-            auteur: ''
+            auteur: '',
+            previous: [],
+            showRestore: false
         };
         this.delete = this.delete.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -85,6 +87,7 @@ class ArticleDetail extends Component {
                         datePublication: result.data.current.datePublication,
                         auteur: result.data.current.auteur,
                         current: result.data.current.v,
+                        previous: result.data.prev
                     });
                 },
                 (error) => {
@@ -141,7 +144,7 @@ class ArticleDetail extends Component {
 
 
     render() {
-        const { error, isLoaded, data, showModifier } = this.state;
+        const { error, isLoaded, data, showModifier, showRestore } = this.state;
         if (error) {
             return <div>Erreur : {error.message}</div>;
         } else if (!isLoaded) {
@@ -159,6 +162,26 @@ class ArticleDetail extends Component {
                         <div>
                             <span>{this.state.auteur} - {this.state.datePublication}</span>
                         </div>
+
+                        {showRestore ? (
+                            <div className="restore-container">
+                                {this.state.previous.map((item, index) =>
+                                    <div className="option" key={item}>
+                                        <h3>Version {item.v}</h3>
+                                        <span>{item.auteur} - {item.datePublication}</span>
+                                        <div dangerouslySetInnerHTML={{ __html: item.contenu }} />
+                                        <div className="tags">
+                                            {item.tag.map((tag, key) =>
+                                                <div>{tag}</div>
+                                            )}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        ) : (
+                                <div></div>
+                            )}
+
                     </div>
                     <div className="actions col-md-2">
                         <h3>Actions</h3>
@@ -166,6 +189,7 @@ class ArticleDetail extends Component {
                         <p>Version : {this.state.current}</p>
                         <br />
                         <a className="btn btn-primary" onClick={() => this.setState({ showModifier: true })}>Modifier</a>
+                        <a className="btn btn-primary" onClick={() => this.setState({ showRestore: true })}>Restaurer une version précédente</a>
                         <a className="btn btn-danger" onClick={() => { if (window.confirm('Voulez-vous vraiment supprimer ce chef d\'oeuvre ?')) this.delete(this.props.match.params.id) }}>Supprimer</a>
 
 
@@ -286,6 +310,7 @@ class ArticleDetail extends Component {
                     </form >
                 )
             }
+
             else {
                 return (
                     <h1>Aucune catégories en base, veillez en ajouter</h1>
