@@ -57,7 +57,7 @@ class Articles extends Component {
                                         <div className="card-text truncate" dangerouslySetInnerHTML={{ __html: item.current.contenu }} />
                                     </div>
                                     <div className="part2">
-                                        <p className="card-text"><i>{item.auteur} - {item.current.datePublication}</i></p>
+                                        <p className="card-text"><i>{item.current.auteur} - {item.current.datePublication}</i></p>
                                         <a href={'/article/' + item._id} className="btn btn-primary">Lire la suite</a>
                                     </div>
                                 </div>

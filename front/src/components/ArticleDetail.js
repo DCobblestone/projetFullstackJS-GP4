@@ -24,6 +24,14 @@ class ArticleDetail extends Component {
         this.delete = this.delete.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleRestore = this.handleRestore.bind(this);
+
+        this.titreInput = React.createRef();
+        this.contenuInput = React.createRef();
+        this.tagInput = React.createRef();
+        this.auteurInput = React.createRef();
+        this.dateInput = React.createRef();
+
     }
 
     handleChange(event) {
@@ -39,6 +47,29 @@ class ArticleDetail extends Component {
         this.setState({
             contenu: content
         })
+    }
+
+
+    handleRestore(event) {
+        event.preventDefault();
+        const tags = this.tagInput.current.value.split(',');
+        const data = {
+            _id: this.props.match.params.id,
+            titre: this.titreInput.current.value,
+            contenu: this.contenuInput.current.value,
+            tag: tags,
+            datePublication: this.dateInput.current.value,
+            auteur: this.auteurInput.current.value
+        };
+
+        fetch('http://localhost:8000/article', {
+            method: 'PUT',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => res.json())
+            .then(this.handleRedirect)
     }
 
     handleSubmit(event) {
@@ -153,7 +184,7 @@ class ArticleDetail extends Component {
             // Pas d'erreur et les données sont bien chargées, on affiche le résultat de notre requête.
             return (
                 <div className="card-articles row">
-                    <div className="article-container">
+                    <div className="article-container col-md-10">
                         <div>
                             <h1>{this.state.titre}</h1>
                             {/* Affiche les données formatées en tant qu'HTML */}
@@ -166,15 +197,27 @@ class ArticleDetail extends Component {
                         {showRestore ? (
                             <div className="restore-container">
                                 {this.state.previous.map((item, index) =>
-                                    <div className="option" key={item}>
-                                        <h3>Version {item.v}</h3>
-                                        <span>{item.auteur} - {item.datePublication}</span>
-                                        <div dangerouslySetInnerHTML={{ __html: item.contenu }} />
-                                        <div className="tags">
-                                            {item.tag.map((tag, key) =>
-                                                <div>{tag}</div>
-                                            )}
+                                    <div className="option row align-items-center" key={item}>
+                                        <div className="col-md-10">
+                                            <h3>Version {item.v}</h3>
+                                            <span>{item.auteur} - {item.datePublication}</span>
+                                            <div dangerouslySetInnerHTML={{ __html: item.contenu }} />
+                                            <div className="tags">
+                                                {item.tag.map((tag, key) =>
+                                                    <div>{tag}</div>
+                                                )}
+                                            </div>
                                         </div>
+                                        <div className="col-md-2 center">
+                                            <input type="hidden" ref={this.titreInput} value={item.titre} />
+                                            <input type="hidden" ref={this.contenuInput} value={item.contenu} />
+                                            <input type="hidden" ref={this.tagInput} value={item.tag} />
+                                            <input type="hidden" ref={this.auteurInput} value={item.auteur} />
+                                            <input type="hidden" ref={this.dateInput} value={item.datePublication} />
+                                            <button className="btn btn-primary" onClick={this.handleRestore}>Restaurer</button>
+
+                                        </div>
+
                                     </div>
                                 )}
                             </div>
