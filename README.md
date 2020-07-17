@@ -1,5 +1,6 @@
 # projetFullstackJS-GP4
-Projet FullStack JS - Group 4 : PROUDHOM Bastien - LEVECQ Pauline
+Projet FullStack JS 
+Groupe 4 : PROUDHOM Bastien - LEVECQ Pauline
 
 # Descriptif général
 
@@ -28,22 +29,22 @@ Chaque interaction avec l'API renvoie un code spécifique permettant d'évaluer 
 # Descriptif des fonctionnalités développées
 
 L'application permet la gestion d'articles, ainsi que leur catégorisation. Ainsi, vous pouvez réaliser les actions suivantes :
-* *Ajouter* un article
-* *Supprimer* un article
-* *Modifier* un article
+* **Ajouter** un article
+* **Supprimer** un article
+* **Modifier** un article
   
-Un système de *versionning* a été implémenté. Chaque version de l'article est sauvegardée en base, et peut être consultée depuis l'application. Il est également possible de restaurer une version précédente, tout en conservant l'historique de modifications effectuées depuis. À cette fin, la version restaurée est considérée comme une nouvelle version du document, permettant ainsi de conserver l'intégralité de l'historique du document et les différents états par lequel il est passé. 
+Un système de **versionning** a été implémenté. Chaque version de l'article est sauvegardée en base, et peut être consultée depuis l'application. Il est également possible de restaurer une version précédente, tout en conservant l'historique de modifications effectuées depuis. À cette fin, la version restaurée est considérée comme une nouvelle version du document, permettant ainsi de conserver l'intégralité de l'historique du document et les différents états par lequel il est passé. 
   
-Lors de l'ajout ou de la modification d'un article, il vous est possible de lui attribuer une *catégorie*. Chaque catégorie a sa page dédiée permettant de retrouver les différents articles qu'elle contient.  
-Il vous est également possible d'attribuer des *tags* à votre article. Plusieurs tags peuvent être renseignés pour le même article. Vous devez pour cela les séparer d'une virgule lors de l'édition ou de la modification de l'article.
+Lors de l'ajout ou de la modification d'un article, il vous est possible de lui attribuer une **catégorie**. Chaque catégorie a sa page dédiée permettant de retrouver les différents articles qu'elle contient.  
+Il vous est également possible d'attribuer des **tags** à votre article. Plusieurs tags peuvent être renseignés pour le même article. Vous devez pour cela les séparer d'une virgule lors de l'édition ou de la modification de l'article.
 
-Un *formulaire de recherche* vous permet de retrouver les articles par titre et par tag, indifféremment. Ce formulaire ne prend pas la casse en considération, et admet les recherches partielles (ex: "pre" pour "premier" ou "science" pour "sciences")
+Un **formulaire de recherche** vous permet de retrouver les articles par titre et par tag, indifféremment. Ce formulaire ne prend pas la casse en considération, et admet les recherches partielles (ex: "pre" pour "premier" ou "science" pour "sciences")
 
 # Manuel d'installation
 
 Prérequis :
 * Avoir node d'installé sur la machine
-* Avoir mongodb d'installé (et une connection paramétrée sur localhost:27017 ? @Bastien)
+* Avoir mongodb d'installé et une connection paramétrée sur localhost:27017
 
 A l'ouverture du projet :
 * ```cd back``` // Aller dans le dossier back
@@ -51,7 +52,7 @@ A l'ouverture du projet :
 * ```nodemon index.js``` // Lancer le serveur : la console doit afficher "Le serveur tourne sur l'adresse : http://localhost:8000"  
  
 
-* ```cd ../front``` // Aller dans le dossier front
+* ```cd front``` // Aller dans le dossier front
 * ```npm install``` // Installer les dépendances
 * ```npm start``` // Lancement du projet React : votre navigateur doit s'ouvrir à l'adresse : http://localhost:3000
 
@@ -68,7 +69,7 @@ Ceci va créer les collections et insérer les données de départ dans votre ba
 |    DELETE   |       /article/:id       |                      Delete one                      |
 |     POST    |         /article         | Create(titre, contenu, tag, datePublication, auteur) |
 |     PUT     |         /article         | Update(titre, contenu, tag, datePublication, auteur) |
-|     POST    |     /article/searche     |                  Find(titre or tag)                  |
+|     POST    |     /article/search      |                  Find(titre or tag)                  |
 |     GET     |        /categories       |                       Read all                       |
 |     PUT     |        /categorie        |                Add article to category               |
 |     GET     | /categorie/:nomCategorie |       Get all articles belonging to a category       |
