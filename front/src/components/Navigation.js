@@ -11,12 +11,12 @@ const Navigation = () => {
             <div>Catégories</div>
             <div>
                 <ul>
-                    <li><NavLink to={{pathname:'/articles/Sport'}} >Sport</NavLink></li>
-                    <li><NavLink to={{pathname:'/articles/Sciences'}}>Sciences</NavLink></li>
-                    <li><NavLink to={{pathname:'/articles/Jeux vidéos'}}>Jeux vidéos</NavLink></li>
-                    <li><NavLink to={{pathname:'/articles/Politique'}}>Politique</NavLink></li>
-                    <li><NavLink to={{pathname:'/articles/Faits divers'}}>Faits divers</NavLink></li>
-                    <li><NavLink to={{pathname:'/articles/Autres'}}>Autres</NavLink></li>
+                    <li><NavLink to={{ pathname: '/articles/Sport' }} >Sport</NavLink></li>
+                    <li><NavLink to={{ pathname: '/articles/Sciences' }}>Sciences</NavLink></li>
+                    <li><NavLink to={{ pathname: '/articles/Jeux vidéos' }}>Jeux vidéos</NavLink></li>
+                    <li><NavLink to={{ pathname: '/articles/Politique' }}>Politique</NavLink></li>
+                    <li><NavLink to={{ pathname: '/articles/Faits divers' }}>Faits divers</NavLink></li>
+                    <li><NavLink to={{ pathname: '/articles/Autres' }}>Autres</NavLink></li>
                 </ul>
             </div>
             <br></br>

@@ -190,8 +190,11 @@ class ArticleDetail extends Component {
                             {/* Affiche les données formatées en tant qu'HTML */}
                             <div dangerouslySetInnerHTML={{ __html: this.state.contenu }} />
                         </div>
-                        <div>
+                        <div className="meta">
                             <span>{this.state.auteur} - {this.state.datePublication}</span>
+                            <div className="tag">
+                                {this.state.tag}
+                            </div>
                         </div>
 
                         {showRestore ? (
@@ -222,7 +225,7 @@ class ArticleDetail extends Component {
                                 )}
                             </div>
                         ) : (
-                                <div></div>
+                                <div />
                             )}
 
                     </div>
@@ -234,8 +237,6 @@ class ArticleDetail extends Component {
                         <a className="btn btn-primary" onClick={() => this.setState({ showModifier: true })}>Modifier</a>
                         <a className="btn btn-primary" onClick={() => this.setState({ showRestore: true })}>Restaurer une version précédente</a>
                         <a className="btn btn-danger" onClick={() => { if (window.confirm('Voulez-vous vraiment supprimer ce chef d\'oeuvre ?')) this.delete(this.props.match.params.id) }}>Supprimer</a>
-
-
                     </div>
                 </div>
             );

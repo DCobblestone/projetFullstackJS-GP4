@@ -1,0 +1,27 @@
+form {
+    margin: 20px;
+    max-width: 700px;
+    min-width: 700px;
+}
+
+.card-articles{
+    display: flex;
+    justify-content: center;
+    width: calc(100% - 300px);
+    height: max-content;
+}
+
+.articles-container{
+    flex-wrap: wrap;
+    display: flex;
+    width: 924px;
+    margin-top: 30px;
+}
+
+.card {
+    margin: auto;
+}
+
+div+form {
+    margin: auto;
+}

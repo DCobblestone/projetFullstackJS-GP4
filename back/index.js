@@ -168,9 +168,6 @@ MongoClient.connect('mongodb://localhost:27017', function (err, client) {
                 };
             })
 
-        app.route('/article/:id/restore')
-
-
         app.route('/article/search')
             .post(function (req, res, next) {
                 collection.find(

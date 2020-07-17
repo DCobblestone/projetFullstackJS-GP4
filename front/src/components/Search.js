@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import '../styles/Search.css';
+
 
 class Search extends Component {
     constructor(props) {
@@ -55,9 +57,23 @@ class Search extends Component {
         if (this.state.results != null) {
             return (
                 <div>
+                    <form onSubmit={this.handleSubmit}>
+                        <div className="form-group d-flex">
+                            <input
+                                className="form-control"
+                                id="term"
+                                name="term"
+                                type="text"
+                                placeholder="Titre ou tag"
+                                value={this.state.term}
+                                onChange={this.handleChange} />
+                            <div className="input-group-append">
+                                <button className="btn btn-outline-secondary" type="submit"><i className="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
                     <div className="card-articles">
                         <div className="articles-container">
-
                             {this.state.results.map((item, index) =>
                                 <div className="card" key={item}>
                                     <div className="card-body">
@@ -79,21 +95,7 @@ class Search extends Component {
                             )}
                         </div>
                     </div>
-                    <form onSubmit={this.handleSubmit}>
-                        <div className="form-group d-flex col-md-10">
-                            <input
-                                className="form-control"
-                                id="term"
-                                name="term"
-                                type="text"
-                                placeholder="Titre ou tag"
-                                value={this.state.term}
-                                onChange={this.handleChange} />
-                            <div className="input-group-append">
-                                <button className="btn btn-outline-secondary" type="submit"><i className="fas fa-search"></i></button>
-                            </div>
-                        </div>
-                    </form>
+
                 </div>
             )
         }

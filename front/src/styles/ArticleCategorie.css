@@ -1,0 +1,9 @@
+.categ {
+    min-width: 924px;
+}
+
+.categ h2 {
+    text-align: center;
+    color: #fff;
+    margin: 30px auto;
+}

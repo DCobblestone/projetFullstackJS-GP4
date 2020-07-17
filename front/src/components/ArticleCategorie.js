@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../styles/ArticleDetail.css';
+import '../styles/ArticleCategorie.css';
 
 class ArticleCategorie extends Component {
 
@@ -83,29 +83,35 @@ class ArticleCategorie extends Component {
             console.log("affichage des articles")
             // Pas d'erreur et les données sont bien chargées, on affiche le résultat de notre requête.
             return (
-                <div className="card-articles">
-                    <div className="articles-container">
-                        {this.state.data.map((item, index) =>
-                            <div className="card" key={index}>
-                                <div className="card-body">
-                                    <div className="part1">
-                                        <h5 className="card-title">{item.current.titre}</h5>
-                                        <div className="card-text truncate" dangerouslySetInnerHTML={{ __html: item.current.contenu }} />
+                <div className="categ">
+                    <h2>Catégorie : {this.props.match.params.id}</h2>
+
+                    <div className="card-articles">
+                        <div className="articles-container">
+                            {this.state.data.map((item, index) =>
+                                <div className="card" key={index}>
+                                    <div className="card-body">
+                                        <div className="part1">
+                                            <h5 className="card-title">{item.current.titre}</h5>
+                                            <div className="card-text truncate" dangerouslySetInnerHTML={{ __html: item.current.contenu }} />
+                                        </div>
+                                        <div className="part2">
+                                            <p className="card-text"><i>{item.current.auteur} - {item.current.datePublication}</i></p>
+                                            <a href={'/article/' + item._id} className="btn btn-primary">Lire la suite</a>
+                                        </div>
                                     </div>
-                                    <div className="part2">
-                                        <p className="card-text"><i>{item.current.auteur} - {item.current.datePublication}</i></p>
-                                        <a href={'/article/' + item._id} className="btn btn-primary">Lire la suite</a>
+                                    <div className="tags">
+                                        {item.current.tag.map((tag, key) =>
+                                            <div>{tag}</div>
+                                        )}
                                     </div>
                                 </div>
-                                <div className="tags">
-                                    {item.current.tag.map((tag, key) =>
-                                        <div>{tag}</div>
-                                    )}
-                                </div>
-                            </div>
-                        )}
+                            )}
+                        </div>
                     </div>
+
                 </div>
+
             );
         }
     }
