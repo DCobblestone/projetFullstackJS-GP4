@@ -1,5 +1,5 @@
 # projetFullstackJS-GP4
-Projet FullStack JS 
+Projet FullStack JS  
 Groupe 4 : PROUDHOM Bastien - LEVECQ Pauline
 
 # Descriptif général
